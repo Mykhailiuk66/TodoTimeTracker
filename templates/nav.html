@@ -1,0 +1,32 @@
+<header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="{% url 'todo' %}" class="nav-link px-2 text-white">Todo</a></li>
+          <li><a href="{% url 'timeline' %}" class="nav-link px-2 text-white">Time Tracker</a></li>
+        </ul>
+
+        {% if request.user.is_authenticated %}
+        <div class="text-end">
+          <ul class="nav navbar-nav mr-auto col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{request.user.profile.name}}
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        {% else %}
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-light me-2 signin-btn"><a class="text-decoration-none" href="{% url 'login' %}">Login</a></button>
+          <button type="button" class="btn btn-warning signup-btn"><a class="text-decoration-none" href="{% url 'register' %}">Sign-up</a></button>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+</header>

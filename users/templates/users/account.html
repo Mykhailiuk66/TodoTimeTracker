@@ -1,0 +1,146 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<section style="background-color: #eee;">
+    <div class="container py-5">
+      
+  
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4 bg-dark text-white">
+            <div class="card-body text-center">
+              <img src="{{profile.imageURL}}" alt="avatar"
+                class="rounded-circle img-fluid avatar">
+              <h5 class="my-3">{{profile.name}}</h5>
+              <p class="text-muted mb-1">@{{profile.username}}</p><br>
+              <div class="d-flex justify-content-center mb-2">
+                <a href="{% url 'edit-profile' %}">
+                <button type="button" class="btn btn-outline-primary ms-1">Edit</button>
+                </a>
+                
+                {% if request.user.is_superuser %}
+                <a href="{% url 'create-tag' %}">
+                  <button type="button" class="btn btn-outline-warning ms-1">Add Tag</button>
+                </a>
+
+                <a href="{% url 'update-tag' %}">
+                  <button type="button" class="btn btn-outline-info ms-1">Edit Tag</button>
+                </a>
+
+                <a href="{% url 'delete-tag' %}">
+                  <button type="button" class="btn btn-outline-danger ms-1">Delete Tag</button>
+                </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0">
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush rounded-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3 bg-dark text-white">
+                    <i class="bi bi-envelope-at"></i>
+                  <p class="mb-0">{{profile.email}}</p>
+                </li>
+                
+              </ul>
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0 mt-2">
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush rounded-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3 bg-dark text-white">
+                    <i class="bi bi-list-task"></i>
+                    <p class="mb-0">Total number of tasks: {{total_tasks}}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0 mt-2">
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush rounded-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3 bg-dark text-white">
+                    <i class="bi bi-check"></i>
+                    <p class="mb-0">Total number of completed tasks: {{total_completed_tasks}}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0 mt-2">
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush rounded-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3 bg-dark text-white">
+                    <i class="bi bi-check"></i>
+                    <p class="mb-0">Total number of tasks in progress: {{total_in_progress_tasks}}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="card mb-4 bg-dark text-white">
+            <div class="card-body">
+              <div class="row">
+                  <h3 class="mb-0 text-center">Last Timelines</h3>
+                
+              </div>
+              <hr>
+
+              {% for record in last_records|slice:"5"  %}
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">{{record.timeline.title}}</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">
+                      <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {% widthratio record.periodSeconds max_period 100 %}%; background-color: {{record.timeline.color}};" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                          
+                        </div>
+                      </div>
+                </div>
+              </div>
+
+              {% if not forloop.last %}
+              <hr>
+              {% endif %}
+              {% endfor %}
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card mb-4 mb-md-0 bg-dark text-white">
+                <div class="card-body">
+                  {% for record in last_records|slice:"5:10"  %}
+                  <p class="{% if not forloop.first %} mt-4 {% endif %} mb-1" style="font-size: .77rem;">{{record.timeline.title}}</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: {% widthratio record.periodSeconds max_period 100 %}%; background-color: {{record.timeline.color}};" aria-valuenow="55"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card mb-4 mb-md-0 bg-dark text-white">
+                <div class="card-body">
+                  {% for record in last_records|slice:"10:15"  %}
+                  <p class="{% if not forloop.first %} mt-4 {% endif %} mb-1" style="font-size: .77rem;">{{record.timeline.title}}</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: {% widthratio record.periodSeconds max_period 100 %}%; background-color: {{record.timeline.color}};" aria-valuenow="55"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  {% endfor %}
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}
+

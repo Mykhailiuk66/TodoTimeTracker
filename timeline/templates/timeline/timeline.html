@@ -1,0 +1,22 @@
+{% extends 'main.html' %} {% block content %}
+
+<section class="timeline-section">
+	<div class="container pt-5 h-100">
+		<div class="row g-5 d-flex justify-content-center align-items-center h-100">
+			
+			<div class="wrapper-timeline">
+				<div class="timeline-div">
+					{% include 'timeline/timeline-table.html' %}
+				</div>
+				<div>
+					{% include 'timeline/timeline-active.html' %}
+				</div>
+				<div>
+					{% include 'timeline/timeline-history.html' %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock content %}

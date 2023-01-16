@@ -1,0 +1,31 @@
+
+    <div class="bg-dark table-responsive custom-table-responsive timeline-table">
+        <table class="bg-dark table table-dark bg-dark custom-table custom-table-timeline">
+            <h3 class="text-white">Active</h3>
+            <tbody>
+                {% for record in active_records %}
+                        <tr class="timeline-active-{{record.timeline.id}}">
+                        
+                        <td scope="row" class="timeline-title timeline-color text-center bg-secondary text-white" >
+                            <span class="status" style="background-color: {{record.timeline.color}}"> </span>
+                        </td>
+
+                        <td class="timeline-active-name-td bg-secondary text-white">
+                                {{record.timeline.title|capfirst|truncatechars:30 }}
+                        </td>
+
+                        <td class="bg-secondary text-white elapsed-time" id='elapsed-time-{{record.id}}' data-starttime="{{record.start_time.isoformat}}">
+                        </td>
+                        
+                        <td scope="row" class="bg-secondary text-white timeline-btn-td">
+                            <a class="btn btn-dark timeline-active-stop-btn timeline-rounded-btn" href="{% url 'stop-timeline' record.timeline.id %}">Stop</a>
+                        </td>
+
+                    </tr>
+                    <tr class="spacer">
+                        <td colspan="100"></td>
+                    </tr>   
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>

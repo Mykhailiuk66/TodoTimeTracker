@@ -1,0 +1,56 @@
+
+    <div class="bg-dark table-responsive custom-table-responsive timeline-table">
+        <table class="bg-dark table table-dark custom-table custom-table-timeline">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center"></th>
+                    <th scope="col">Title</th>
+                    <th scope="col"></th>
+                    <th scope="col">
+                        <a href="{% url 'create-timeline' %}">
+                            <button class="btn rounded-circle btn-warning mr-md-3 mb-2 mb-md-0 float-end" type="button">
+                                <i class="bi bi-plus-lg plus-icon"></i>
+                            </button>    
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for timeline in timelines %}
+                <tr class="timeline-{{timeline.id}}">
+                    
+                    <td scope="row" class="timeline-title timeline-color text-center  text-white" >
+                        <span class="status" style="background-color: {{timeline.color}}"> </span>
+                    </td>
+
+
+                    <td class="timeline-name-td  text-white">
+                        <div>
+                            {{timeline.title|capfirst|truncatechars:100 }}
+                        </div>
+                    </td>
+                    
+                    <td scope="row" class=" text-white timeline-btn-td">
+                        <a class="btn btn-dark timeline-rounded-btn" href="{% url 'start-timeline' timeline.id %}" {% if timeline.active %}style="display: none;"{% endif %}>Start</a>
+                    </td>
+
+                    <td class="more-btn-td timeline-more-btn-td  text-white">
+                        <button class="btn rounded-circle btn-dark mr-md-3 mb-2 mb-md-0 float-end" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots-vertical"> </i>
+                        </button>
+                        
+                          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item timeline-change" href="{% url 'update-timeline' timeline.id %}">Change</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item timeline-delete" data-url="{% url 'delete-timeline' timeline.id %}" data-id="{{timeline.id}}">Delete</a></li>
+                          </ul>
+                        
+                    </td>
+                </tr>
+                <tr class="spacer">
+                    <td colspan="100"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
