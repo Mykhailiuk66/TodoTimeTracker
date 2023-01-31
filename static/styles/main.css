@@ -537,3 +537,7 @@ header {
 	width: 150px !important;
 	height: 150px !important;
 }
+
+.error-message{
+	padding-left: 1rem;
+}
