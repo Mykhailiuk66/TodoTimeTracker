@@ -26,8 +26,7 @@ class Timeline(models.Model):
     def __str__(self):
         return str(self.title)
         
-    
-    
+            
 class Record(models.Model):
     timeline = models.ForeignKey(Timeline, on_delete=models.CASCADE)
     start_time = models.DateTimeField(auto_now_add=True)

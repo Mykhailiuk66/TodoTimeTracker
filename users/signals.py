@@ -13,7 +13,6 @@ def createProfile(sender, instance, created, **kwargs):
             username = user.username,
             email = user.email 
         )
-        profile.save()
         
 
 def updateUser(sender, instance, created, **kwargs):

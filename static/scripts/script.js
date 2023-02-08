@@ -18,6 +18,7 @@ for (let i = 0; i < taskCheckers.length; i++) {
 		let id = e.target.dataset.id;
 
 		fetch(url, {
+			method: 'POST',
 			headers: {
 				"X-Requested-With": "XMLHttpRequest",
 			},

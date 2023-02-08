@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
 from .forms import TaskForm, TagForm, UpdateTagForm, DeleteTagForm
 from .models import Task, Tag
 from .utils import pagination_tasks
@@ -65,14 +66,23 @@ def update_task(request, pk):
 
 
 @login_required(login_url='login')
+@csrf_exempt
 def task_done(request, pk):
-    profile = request.user.profile
-    task = profile.task_set.get(id=pk)
-    task.done = not task.done
-    task.save()
+
+    if request.method == 'POST':
+        profile = request.user.profile
+        task = profile.task_set.get(id=pk)
+        task.done = not task.done
+        task.save()
+
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+            return JsonResponse({'checked': task.done}, safe=False)
+        else:
+            return redirect('todo')
+    
 
     if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
-        return JsonResponse({'checked': task.done}, safe=False)
+        return JsonResponse({'Error': 'Only POST method is allowed'}, safe=False)
     else:
         return redirect('todo')
 
